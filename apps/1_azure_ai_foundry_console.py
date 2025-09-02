@@ -1,18 +1,23 @@
-# Sample by Tobias Zimmergren
-# See: 
+# A simple console chat sample using managed identity to connect to an Azure AI Foundry /model endpoint
+# See the full details: https://zimmergren.net/
 
 import os
 from azure.identity import DefaultAzureCredential
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, AssistantMessage
 
-# Load environment variables from .env file locally; 
-# doesn't load anything in Azure, where it instead fetches App Settings.
+# ────────────────────────────────────────────────────────────────────────────────
+# Environment & constants
+# ────────────────────────────────────────────────────────────────────────────────
 from dotenv import load_dotenv
 load_dotenv()
 
-ENDPOINT = os.environ["AZURE_AI_ENDPOINT"]
-MODEL = os.environ["AZURE_AI_MODEL"]
+ENDPOINT = os.environ["AZURE_AI_ENDPOINT"]  # format example: AZURE_AI_ENDPOINT=https://[your_endpoint].services.ai.azure.com/models
+MODEL = os.environ["AZURE_AI_MODEL"]        # format example: AZURE_AI_MODEL=gpt-5-chat
+
+# ────────────────────────────────────────────────────────────────────────────────
+# App & Azure client lifecycle
+# ────────────────────────────────────────────────────────────────────────────────
 
 def main():
     # Auth: 
